@@ -1,0 +1,23 @@
+{
+  "name": "bottender-awesome-bot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon src/server.js --watch src",
+    "start": "node src/server.js",
+    "ngrok": "npm run ngrok:http && npm run telegram:webhook:set",
+    "ngrok:http": "{ ngrok http 5000 > /dev/null & } && echo 'Waiting for running ngrok server' && sleep 3",
+    "ngrok:kill": "ps aux | grep ngrok | grep -v grep | awk '{print $2}' | xargs -r kill -9",
+    "ngrok:url:pub": "curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url\":\"(https:..[^\"]*).*/\\1/p'",
+    "telegram:webhook:get": "bottender telegram webhook get",
+    "telegram:webhook:set": "printf 'y' | bottender telegram webhook set --ngrok-port=4040"
+  },
+  "dependencies": {
+    "bottender": "0.15.7",
+    "dotenv-safe": "^6.0.0",
+    "nodemon": "1.18.4"
+  },
+  "devDependencies": {
+    "ngrok": "^3.1.0"
+  }
+}
