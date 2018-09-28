@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  node:
+    image: node:10-slim
+    user: node
+    container_name: bottender-awesome-bot-node-slim
+    working_dir: /home/app
+    environment:
+      - PORT=${SERVER_PORT}
+    volumes:
+      - ${APP_PATH}:/home/app
+    command: bash -c "npm install && npm run dev"
+  ngrok:
+    image: wernight/ngrok
+    container_name: bottender-awesome-bot-ngrok
+    working_dir: /home/app
+    links:
+      - node
+    environment:
+      - NGROK_PORT=node:${SERVER_PORT}
+    ports:
+      - 4040:4040
+    volumes:
+      - ${APP_PATH}:/app
