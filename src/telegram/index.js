@@ -9,5 +9,5 @@ module.exports = {
     })
       .onEvent(handler)
   },
-  webhook: require('./webhook')
+  webhookMiddleware: require('./webhookMiddleware')
 }
